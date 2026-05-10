@@ -1,0 +1,65 @@
+### Mileage rate — COMPILE path (structured rules)
+POST http://localhost:3000/query
+Content-Type: application/json
+
+{
+  "message": "What's the mileage rate for my private car?"
+}
+
+### Mileage rate — BASELINE path (full PDF inlined)
+POST http://localhost:3000/baseline
+Content-Type: application/json
+
+{
+  "message": "What's the mileage rate for my private car?"
+}
+
+### Claim deadline — compile
+POST http://localhost:3000/query
+Content-Type: application/json
+
+{
+  "message": "How long do I have to submit a travel expense claim?"
+}
+
+### Claim deadline — baseline
+POST http://localhost:3000/baseline
+Content-Type: application/json
+
+{
+  "message": "How long do I have to submit a travel expense claim?"
+}
+
+### Accommodation eligibility — compile
+POST http://localhost:3000/query
+Content-Type: application/json
+
+{
+  "message": "Can I get a hotel for a 1-day training event 30 minutes from my home?"
+}
+
+### Accommodation eligibility — baseline
+POST http://localhost:3000/baseline
+Content-Type: application/json
+
+{
+  "message": "Can I get a hotel for a 1-day training event 30 minutes from my home?"
+}
+
+### Out-of-scope (per-diem) — compile
+### YAS doesn't carry per-diem; defers to NHS T&Cs. Should refuse cleanly.
+POST http://localhost:3000/query
+Content-Type: application/json
+
+{
+  "message": "What's the per-diem for Band 8a in London?"
+}
+
+### Out-of-scope (per-diem) — baseline
+### Even with the full PDF, YAS doesn't have it — should also refuse.
+POST http://localhost:3000/baseline
+Content-Type: application/json
+
+{
+  "message": "What's the per-diem for Band 8a in London?"
+}

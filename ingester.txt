@@ -1,0 +1,169 @@
+                 ┌────────────────────────────┐
+                 │   Raw Inputs (Messy Stuff) │
+                 │                            │
+                 │  - policy.pdf              │
+                 │  - event web pages         │
+                 │  - route timetables        │
+                 └────────────┬───────────────┘
+                              │
+                              ▼
+                 ┌────────────────────────────┐
+                 │        Raw Store           │
+                 │  (immutable, hashed,       │
+                 │   versioned snapshots —    │
+                 │   re-process without       │
+                 │   re-fetching sources)     │
+                 │                            │
+                 │  policy_2026-05-08_a3f2.pdf│
+                 │  events_2026-05-08_b7c1/   │
+                 └────────────┬───────────────┘
+                              │
+                              ▼
+                 ┌────────────────────────────┐
+                 │     Ingestion Orchestrator │
+                 │  (reads Raw Store,         │
+                 │   never sources directly)  │
+                 └────────────┬───────────────┘
+      ┌───────────────────────┼─────────────────────────┐
+      ▼                       ▼                         ▼
+┌───────────────┐      ┌───────────────┐        ┌───────────────┐
+│ Policy Parser │      │ Event Parser  │        │ Route Parser  │
+│  (LLM + code) │      │ (LLM + code)  │        │ (LLM + code)  │
+└──────┬────────┘      └──────┬────────┘        └──────┬────────┘
+       │                      │                         │
+       ▼                      ▼                         ▼
+┌───────────────┐      ┌───────────────┐        ┌───────────────┐
+│ Policy Normal-│      │ Event Normal- │        │ Route Normal- │
+│  iser         │      │  iser         │        │  iser         │
+└──────┬────────┘      └──────┬────────┘        └──────┬────────┘
+       │                      │                        │
+       ▼                      ▼                        ▼
+┌───────────────┐      ┌───────────────┐        ┌───────────────┐
+│ rules.json    │      │ event.json    │        │ routes.json   │
+│ policy.md     │      │ event.md      │        │ routes.md     │
+│ (versioned)   │      │ (versioned)   │        │ (versioned)   │
+└──────┬────────┘      └──────┬────────┘        └──────┬────────┘
+       │                      │                         │
+       └──────────────────────┼─────────────────────────┘
+                              ▼
+              ┌────────────────────────────────┐
+              │        Artifact Store          │
+              │  (queryable, versioned;        │
+              │   each artifact tagged with    │
+              │   the raw-source hash it came  │
+              │   from — full lineage)         │
+              └──────────────┬─────────────────┘
+                             │
+                  ┌──────────┴──────────┐
+                  ▼                     ▼
+              ┌───────────────┐      ┌───────────────┐
+              │ Graph Builder │      │ Index Builder │
+              └──────┬────────┘      └──────┬────────┘
+                     │                      │
+                     ▼                      ▼
+              ┌───────────────┐      ┌───────────────┐
+              │ graph/edges   │      │ search indexes│
+              └───────────────┘      └───────────────┘
+
+  ════════════ COMPILE TIME above ─── RUNTIME below ════════════
+   The runtime path reads ONLY from Artifact Store, graph/edges,
+   and search indexes. It never touches Raw Store or external
+   sources — that's the whole point of compiling.
+
+
+                   ┌──────────────────────────┐
+                   │   Concrete things you've done in the last few hours:
+  - Refactored a single file into a clean per-stage layout
+  - Designed a domain schema from a real document
+  - Built a runtime that answers questions from a compiled artifact
+  - Added artifact caching when the cost problem hit
+  - Caught a real architectural blindspot (schema design as un-counted cost)│
+                   └──────────────┬───────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────┐
+                     │  Query Interpreter   │
+                     │  (small LLM call)    │
+                     └──────────┬───────────┘
+                                │ extracts:
+                                │ - user_band
+                                │ - origin_city
+                                │ - event_name
+                                ▼
+          ┌────────────────────────────────────────────────┐
+          │                Structured Lookups              │
+          └────────────────────────────────────────────────┘
+                │                 │                 │
+                ▼                 ▼                 ▼
+      ┌────────────────┐  ┌────────────────┐  ┌────────────────┐
+      │ rules.json     │  │ event.json     │  │ routes.json    │
+      │ (policy)       │  │ (venue, dates) │  │ (Leeds→MCR)    │
+      └──────┬─────────┘  └──────┬─────────┘  └──────┬─────────┘
+           (all three read from the Artifact Store above)
+             │                    │                    │
+             ▼                    ▼                    ▼
+      ┌────────────────┐  ┌────────────────┐  ┌────────────────┐
+      │ class allowed? │  │ nearest station│  │ trains, prices │
+      │ per-diem?      │  │ venue coords   │  │ durations      │
+      └──────┬─────────┘  └──────┬─────────┘  └──────┬─────────┘
+             │                    │                  │
+             └──────────────┬─────┴──────────────┬────┘
+                            ▼                     ▼
+                     ┌──────────────────────────────────┐
+                     │         Graph Lookups            │
+                     │  (hotels near venue, stations)   │
+                     │  [reads graph/edges from above]  │
+                     └──────────────────┬───────────────┘
+                                        │
+                                        ▼
+                           ┌────────────────────────┐
+                           │  Candidate Itinerary   │
+                           └──────────┬─────────────┘
+                                      │
+                                      ▼
+                        ┌────────────────────────────┐
+                        │  LLM (small) for phrasing  │
+                        │ "Here are your options..." │
+                        └──────────┬─────────────────┘
+                                   │
+                                   ▼  (user picks an option)
+                        ┌────────────────────────────┐
+                        │       Booking Tools        │
+                        │  - rail API   (book seat)  │
+                        │  - hotel API  (book room)  │
+                        │  - taxi API   (book ride)  │
+                        │  - dinner API (reserve)    │
+                        │  - calendar   (add events) │
+                        │                            │
+                        │  each tool = typed schema, │
+                        │  not natural language      │
+                        └──────────┬─────────────────┘
+                                   │
+                                   ▼
+                        ┌────────────────────────────┐
+                        │   Confirmation + receipts  │
+                        │   (booking refs, costs,    │
+                        │    returned to user)       │
+                        └────────────────────────────┘
+
+
+  ═══════════ Cross-cutting: Observability ═══════════
+
+      ┌──────────────────────────────────────────┐
+      │         Trace / Metrics Sink             │
+      │                                          │
+      │  every runtime box writes a span:        │
+      │   - tokens in / tokens out               │
+      │   - latency per stage                    │
+      │   - artifact version consulted           │
+      │   - which rule fired (if any)            │
+      │   - tool calls + outcomes (success/fail) │
+      │                                          │
+      │  also receives compile-time spans:       │
+      │   - parser tokens, parser duration       │
+      │   - source hash → artifact hash mapping  │
+      │                                          │
+      │  this is what powers the experiment —    │
+      │  the compile-vs-RAG comparison lives     │
+      │  entirely in this data                   │
+      └──────────────────────────────────────────┘

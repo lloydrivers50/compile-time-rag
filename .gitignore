@@ -1,0 +1,20 @@
+node_modules/
+
+# Secrets — keep .env.example committed as a template
+.env
+.env.*
+!.env.example
+
+# Build / logs
+dist/
+build/
+*.tsbuildinfo
+*.log
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Cached PDF text — easily regenerated, not worth committing
+data/policy-text.txt

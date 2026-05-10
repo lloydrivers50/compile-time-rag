@@ -1,0 +1,54 @@
+high-level design (first cut)
+
+
+   user ──► chat ──► queue ──► langgraph ──► agent ──► langraph/obervability
+                                              │
+                                              ▼
+   system ──► ingest ──► embeddings ──► chroma / postgres
+
+
+
+Notes:
+
+1. User enter a prompt into a chat.
+
+2. Why are we using a queue? Becuase we dont want to lock the UI and dampen
+   the UX. It also promotes loose coupling.
+
+3. Langgraph pulls objects off the queue.
+
+4. The systen ingests all the data as described by the article.
+
+
+
+─── NOTE FOR NEXT SESSION (safe to delete once context is restored) ───
+Last touched: 2026-05-08
+
+Goal of this whole project: test the VentureBeat "compilation-stage
+knowledge layer" claim against a simple NHS corporate travel chatbot.
+Why NHS: shared policy + recurring events + group bookings = strong
+amortisation case. Article claim is ~98% token reduction vs runtime RAG;
+we want to see if that holds, where it breaks, and at what break-even N
+of queries compilation pays back its upfront cost.
+
+Detailed architecture is in node/ingester.txt — Raw Store → parsers →
+Artifact Store + graph + indexes → runtime structured lookups →
+Booking Tools, with an observability sink that captures compile-time
+AND runtime spans. The experiment scoreboard lives entirely in those
+spans (tokens in/out, latency, artifact version consulted, rule fired,
+tool outcomes). Total cost = compile_tokens + (query_tokens × N).
+
+Decided architecture: functional pipeline + recipe pattern
+(IngestRecipe<T>), DI via parameters — NOT classes. OOP reserved for
+genuinely class-shaped components (state machines, domain entities
+with invariants). Reasons in chat history; tl;dr: variation here is
+configuration, not behaviour.
+
+Next step when resuming: build the thinnest end-to-end slice —
+Policy Parser → rules.json → one runtime lookup against it.
+Do NOT fan out to event/route parsers or the booking layer until
+that slice works end-to-end.
+
+Files to read first on resume: this file, then node/ingester.txt.
+Don't re-derive the design from scratch.
+─────────────────────────────────────────────────────────────────────

@@ -1,0 +1,25 @@
+{
+  "name": "knowledge-layer",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "22.14.0"
+  },
+  "scripts": {
+    "server": "tsx --env-file=.env src/server.ts",
+    "dev": "tsx watch --env-file=.env src/server.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.95.1",
+    "express": "^5.2.1",
+    "pdf-parse": "^2.4.5",
+    "zod": "^4.4.3"
+  }
+}

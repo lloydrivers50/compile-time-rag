@@ -1,0 +1,8 @@
+{"ts":"2026-05-10T16:02:04.299Z","path":"compile","question":"What's the mileage rate for my private car?","input_tokens":1339,"output_tokens":50,"latency_ms":1314}
+{"ts":"2026-05-10T16:02:05.718Z","path":"compile","question":"How long do I have to submit a travel expense claim?","input_tokens":1339,"output_tokens":84,"latency_ms":1404}
+{"ts":"2026-05-10T16:02:08.069Z","path":"compile","question":"Can I get a hotel for a 1-day training event 30 minutes from my home?","input_tokens":1348,"output_tokens":177,"latency_ms":2341}
+{"ts":"2026-05-10T16:02:09.356Z","path":"compile","question":"What's the per-diem for Band 8a in London?","input_tokens":1342,"output_tokens":78,"latency_ms":1276}
+{"ts":"2026-05-10T16:02:10.704Z","path":"baseline","question":"What's the mileage rate for my private car?","input_tokens":5015,"output_tokens":75,"latency_ms":1340}
+{"ts":"2026-05-10T16:02:12.561Z","path":"baseline","question":"How long do I have to submit a travel expense claim?","input_tokens":5015,"output_tokens":86,"latency_ms":1846}
+{"ts":"2026-05-10T16:02:14.570Z","path":"baseline","question":"Can I get a hotel for a 1-day training event 30 minutes from my home?","input_tokens":5024,"output_tokens":140,"latency_ms":2000}
+{"ts":"2026-05-10T16:02:16.189Z","path":"baseline","question":"What's the per-diem for Band 8a in London?","input_tokens":5018,"output_tokens":77,"latency_ms":1610}

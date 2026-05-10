@@ -1,0 +1,89 @@
+{
+  "policyTitle": "Travel and Subsistence Policy and Employee Guidance",
+  "policyVersion": "V7.1",
+  "issuingTrust": "<UNKNOWN>",
+  "mileageRates": [
+    {
+      "vehicleType": "private",
+      "ratePerMile": "45p per mile",
+      "passengerSupplement": "5p per mile"
+    },
+    {
+      "vehicleType": "lease",
+      "ratePerMile": "HMRC guidelines",
+      "passengerSupplement": null
+    }
+  ],
+  "excessMileageRule": "Claimable mileage is total miles travelled minus home to base return journey (home to base mileage x 2). Employees are reimbursed for miles travelled in performance of duties which are in excess of the agreed home to work base return journey.",
+  "accommodationEligibility": [
+    {
+      "context": "training",
+      "rule": ">1 hour from home AND event >1 day duration. Accommodation not normally provided for 1-day events. Exceptions may be made for early commencement times where travel time would be >1 hour."
+    },
+    {
+      "context": "business travel (meetings/conferences)",
+      "rule": ">1 hour from home AND event >1 day duration. Same criteria as training."
+    }
+  ],
+  "approvalRules": [
+    {
+      "expenseType": "general travel and subsistence",
+      "approver": "Line manager with authorised signatory approval for approving expenses"
+    },
+    {
+      "expenseType": "overseas travel",
+      "approver": "Director (must be authorised in advance)"
+    },
+    {
+      "expenseType": "exceptions to agreed allowances",
+      "approver": "Associate Director"
+    }
+  ],
+  "bookingProcess": {
+    "bookingSystem": "Redfern travel booking system via office administration team",
+    "leadTimeWeeks": 2,
+    "claimDeadlineDays": 90
+  },
+  "unhandled": [
+    {
+      "topic": "Travel system platforms",
+      "rawText": "Claims can be made using either GRS (for staff using GRS for rostering) or EASY expenses system via ESR. All claims must be approved in accordance with the Trust scheme of delegation."
+    },
+    {
+      "topic": "Payment schedule",
+      "rawText": "Expenses are paid a month in arrears provided the claim is submitted by the 5th of the following month. For example, expenses incurred in September would be paid into your October salary."
+    },
+    {
+      "topic": "Route planner specification",
+      "rawText": "Journeys will be calculated on the quickest route as calculated by AA route planner or HERE Maps (if using EASY Expenses system). Prior to undertaking journeys, employees should consider whether journeys are necessary and whether duties can be performed virtually or by telephone."
+    },
+    {
+      "topic": "Meal subsistence with accommodation",
+      "rawText": "If meals are included in the accommodation booking, then employees will not be permitted to claim any other subsistence in relation to meals."
+    },
+    {
+      "topic": "Travel time eligibility",
+      "rawText": "Under local agreement, where travel time to a training venue exceeds normal home to base travel time, excess travel time is payable at plain time. Travel time not payable where accommodation offered and declined unless good reason shown (e.g., carer responsibilities). Hours worked on normal shifts are reconciled against training hours. Travel time not payable if asked to work from alternative base station for full shift."
+    },
+    {
+      "topic": "Day for a day principle",
+      "rawText": "If employees are required to attend training, then the principle of a day for a day will be applied."
+    },
+    {
+      "topic": "Vehicle documentation checks",
+      "rawText": "Managers who approve mileage travel claims must annually check: valid driving licence, Certificate of Motor Insurance policy document (with class 1 business cover), MOT Test Certificate, Road Fund Tax. Document check should be undertaken before approving claim and repeated annually as part of appraisal process."
+    },
+    {
+      "topic": "Record retention",
+      "rawText": "The Trust will retain records of claims including copies of receipts for 3 years from the end of the tax year the claim relates to."
+    },
+    {
+      "topic": "Fraud and disciplinary action",
+      "rawText": "Zero-tolerance approach to fraud. Trust commits to investigate any claims suspected of being fraudulent or excessive in accordance with Local Counter Fraud, Bribery and Corruption Policy. Trust reserves right to withhold and withdraw payment of expenses if suspected or proven non-compliance with policies. Non-adherence to these arrangements will be in breach of Trust's Standing Financial Instructions and may be subject to disciplinary action."
+    },
+    {
+      "topic": "Virtual meeting preference",
+      "rawText": "Employees should prioritise alternatives to travel for non-clinical meetings wherever possible e.g. teleconferencing via MS Teams/Zoom. For non-clinical meetings where travel unavoidable, staff should use most cost-effective mode e.g. Trust pool car, lift-sharing."
+    }
+  ]
+}
