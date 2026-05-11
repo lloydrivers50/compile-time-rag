@@ -84,41 +84,91 @@ Instead of a chatty response, we get something like:
 Even though we asked the AI to use a specific shape, we still verify it. We use a library called **Zod** that says *"if this JSON doesn't have the right fields and types, throw an error right now."* This is the safety net — if the AI ever returns garbage, we find out immediately, not three steps later when something else crashes.
 
 **Stage 5 — Save the clean file.**
-Once we have validated structured data, we save it as a JSON file. From now on, anyone asking questions about this document reads from THAT file — never the original PDF. *(We haven't built the save step yet; currently we just log the result to the console.)*
+Once we have validated structured data, we save it as a JSON file (`data/policy-rules.json`). From now on, anyone asking questions about this document reads from THAT file — never the original PDF. On boot we look for the cached artifact first and only run Stages 2-5 if it's missing or fails validation (see `src/compile/loadOrCompilePolicy.ts`).
 
 ---
 
 ### Half 2 — Answering questions (runs every time someone asks)
 
-We haven't built this part yet. It will look like:
+Two query paths exist, on purpose — one is the thing we're testing, the other is the thing we're comparing against.
 
 ```
-User question (e.g. "What's the per-diem for Band 8a?")
+User question (e.g. "What's the mileage rate for my own car?")
    ↓
-[1] Read the clean JSON file (NEVER the PDF)
+[1] Load the compiled rules JSON from disk
    ↓
-[2] Find the answer in the file
+[2] Send the rules + question to the AI
    ↓
 [3] Reply to the user
 ```
 
-**The whole point of this half:** it should be **cheap**, because we're not re-asking the AI to re-read the PDF every time. The expensive thinking already happened once, in Half 1. Now we're just looking things up.
+**Compile path** (`src/runtime/answerQuery.ts`) — the AI sees the structured rules JSON plus the question. Never the PDF.
+
+**Baseline path** (`src/runtime/baseline.ts`) — the AI sees the full raw policy text plus the question. This is the "vanilla RAG, inline the whole document" comparison.
+
+Both paths use the same model and the same max tokens. The only thing that differs is the shape of the context. That's what keeps the comparison fair.
+
+An HTTP server (`src/server.ts`) exposes both paths, and an offline eval harness (`src/eval/runEval.ts`) loops every question in `data/oracle.json` through both paths plus an LLM judge, then writes a timestamped report to `data/eval-runs/`.
+
+**Honest caveat on what this half actually proves.** The compile path is not "look up the answer in the JSON" — the AI still reads the whole rules blob on every call. So what we're measuring is *compression* (denser representation than raw text), not *frontloading* (skipping the AI at query time entirely). A true frontloaded path would be deterministic code reaching into the rules JSON like any POJO, with no LLM call for the deterministic questions. That variant isn't built yet — it's the next architectural step if we want to test the article's strong claim.
 
 ---
 
-## Where we are right now
+## Results & status
 
-**What works:**
-- A PDF gets fetched and its text extracted (we're using the Bitcoin whitepaper as a stand-in for an NHS policy — same plumbing, easier test corpus).
-- Claude reads the text and returns structured metadata (title, author, summary, key concepts).
-- Zod validates the result before we trust it.
-- Clean structured JSON appears in the console.
+**Status:** experiment paused. The headline question has an answer — it just isn't the answer the article promised.
 
-**What's next (when you come back):**
-1. Save the result as a JSON file (right now we just log it).
-2. Build the runtime side — read that JSON file and answer questions from it.
-3. **Run the actual experiment**: count tokens for "lookup from clean file" vs "ask AI with full PDF every time" and compare.
-4. Swap the Bitcoin whitepaper for a real (or synthetic) NHS travel policy.
+**What works end-to-end:**
+- Real corpus: NHS YAS Travel and Subsistence Policy v7.1 (PDF fetched, text extracted, cached to `data/policy-text.txt`).
+- Compile pipeline runs and produces `data/policy-rules.json` — validated against a domain-specific schema (`src/schema/policySchema.ts`) covering mileage rates, accommodation eligibility, approval rules, booking process, exceptions, prohibitions, and evidence requirements.
+- Boot uses the cached artifact when present and only recompiles on miss or validation failure.
+- Both query paths run — compile-path and baseline — against the same model.
+- Eval harness exists with a 10-question oracle (`data/oracle.json`), an LLM judge, and per-run reports under `data/eval-runs/`.
+
+**Current measured result** (latest run, 10 questions):
+
+| Path     | Pass rate | Avg input tokens | Avg latency |
+| -------- | --------- | ---------------- | ----------- |
+| Compile  | 100%      | 1,776            | 2,512 ms    |
+| Baseline | 90%       | 5,024            | 2,233 ms    |
+
+→ **64.6% input-token saving**, compile-path correctness as good or slightly better than baseline.
+
+### What we concluded
+
+- The "compile-time RAG" thesis *partly* holds. Replacing the raw PDF with a structured artefact in the prompt is a real, measurable cost win at no accuracy loss on this oracle.
+- The article's ~98% claim is **not reachable with the architecture we built**. We're compressing the prompt, not eliminating it — the LLM still reads the rules JSON on every call. Hitting 98% would require either prompt caching (cheaper bytes), or a deterministic lookup path that bypasses the LLM for the questions that support it (no bytes at all), or a router that injects only the slice of rules relevant to the question.
+- The strongest version of the experiment is therefore the variant we *didn't* build: tiny intent classifier → POJO lookup against the rules object → fallback LLM call only for fuzzy questions. That's the version that would actually test the article's strong claim.
+
+### If we resume — what to do next, in priority order
+1. Re-write the README's compile-cost framing once we actually measure compile-stage tokens (the eval harness currently only counts per-query tokens).
+2. Compute the breakeven N — `compile_cost + per_query_cost × N` vs `baseline_per_query × N` — using the numbers we already have.
+3. Add prompt caching on the rules block in `answerQuery.ts`. One-line change, biggest free win.
+4. Build the POJO lookup path: a tiny intent classifier in front of deterministic TypeScript that reaches into the rules object for the deterministic questions. This is the only variant that can actually hit the article's 98% claim.
+5. Grow the oracle. 10 LLM-generated questions are enough to feel out the harness; not enough to publish a number with.
+
+---
+
+## Project layout
+
+```
+data/
+  README.md           ← what each artefact is
+  policy-text.txt     ← Stage 1 output: extracted PDF text
+  policy-rules.json   ← Stages 2–5 output: compiled, validated rules
+  oracle.json         ← gold-standard question/answer/citation set
+  runs.jsonl          ← live HTTP traffic log (per-request observability)
+  eval-runs/
+    README.md         ← what these reports are
+    *.json            ← timestamped batch eval reports
+src/
+  compile/            ← Half 1 — Stage 1-5 of the homework
+  runtime/            ← Half 2 — answerQuery (compile path) + baseline
+  eval/               ← offline batch harness + LLM judge
+  obs/                ← recordRun → data/runs.jsonl
+  schema/             ← Zod schema for PolicyRules + tool definition
+  server.ts           ← Express boot, /query and /baseline endpoints
+```
 
 ---
 
