@@ -5,6 +5,9 @@ import { answerQuery } from "./runtime/answerQuery";
 import { baselineQuery } from "./runtime/baseline";
 import { recordRun } from "./obs/recordRun";
 
+/*
+These really belong inside a .config or .env file, but I'm hardcoding them here for simplicity since this is a demo. The URL can be any PDF; the cache and artifact paths can be anywhere on disk. The PORT can be any open port on your machine.
+*/
 const POLICY_PDF_URL =
   "https://www.yas.nhs.uk/media/5154/travel-and-subsistence-policy-and-employee-guidance-v71.pdf";
 const TEXT_CACHE_PATH = "./data/policy-text.txt";
@@ -13,13 +16,13 @@ const PORT = 3000;
 
 // BOOT — extract text once (cached), compile rules once (cached). Both
 // stay in memory for the life of the process. /query uses rules,
-// /baseline uses raw text. Neither endpo int touches the PDF after boot.
+// /baseline uses raw text. Neither endpoint touches the PDF after boot.
 const policyText = await loadOrExtractText(POLICY_PDF_URL, TEXT_CACHE_PATH);
 const rules = await loadOrCompilePolicy(policyText, ARTIFACT_PATH);
 console.log("Starting server.");
 
 const app = express();
-app.use(express.json()); // parses incoming JSON bodies and puts the result in req.body
+app.use(express.json());
 
 // COMPILE-RAG path: small structured rules + question
 app.post("/query", async (req, res) => {
@@ -28,6 +31,7 @@ app.post("/query", async (req, res) => {
     res.status(400).json({ error: "Body must be { message: string }" });
     return;
   }
+  //Capture the data we need for observability BEFORE we run the query, so we can be sure to record it even if the query fails. We get input tokens from the rules (which are the same for every query, but that's fine) and output tokens from the question (which is the only part of the input that changes per query).
   const start = Date.now();
   try {
     const result = await answerQuery(rules, message);

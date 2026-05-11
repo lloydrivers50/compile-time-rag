@@ -43,10 +43,15 @@ export async function loadOrCompilePolicy(
       );
     }
   }
+  /*
+  If we are here it means we have no JSON schema-valid artifact on disk, so we have to compile the rules from the raw text. This costs LLM tokens, so we want to avoid doing it more than once during development. Once we have a valid artifact, we save it to disk for future boots to load for free.
+  */
 
   console.log("Compiling rules from raw text (this costs tokens)...");
   const rules = await askLLMForPolicyRules(text);
-
+  /*
+Since we did not have it, we better save the compiled artifact to disk for future use. This is the whole point of compile-time RAG: we do the expensive work once, save the results, and future boots can load the results for free.
+*/
   await fs.mkdir(path.dirname(artifactPath), { recursive: true });
   await fs.writeFile(artifactPath, JSON.stringify(rules, null, 2));
   console.log(`Saved compiled artifact to ${artifactPath}.`);

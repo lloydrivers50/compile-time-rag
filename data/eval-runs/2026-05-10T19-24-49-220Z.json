@@ -1,0 +1,238 @@
+{
+  "summary": {
+    "n": 10,
+    "compile": {
+      "passRate": 100,
+      "avgInputTokens": 1776.1,
+      "avgLatencyMs": 2107.9
+    },
+    "baseline": {
+      "passRate": 100,
+      "avgInputTokens": 5024.1,
+      "avgLatencyMs": 2215.5
+    },
+    "savingsPct": 64.6483947373659
+  },
+  "results": [
+    {
+      "id": "yas-001",
+      "question": "What's the mileage rate for using my own car on Trust business?",
+      "expected": "45p per mile.",
+      "cite": "Guidance section 5 / section 6 rates table",
+      "compile": {
+        "answer": "According to the policy, the mileage rate for using your own private vehicle on Trust business is **45p per mile**.\n\nIf you carry passengers, you can also claim an additional **5p per mile per passenger**.\n\nNote: You must ensure your vehicle has appropriate business cover in your insurance policy, and your line manager must annually verify you have a valid driving licence, Certificate of Motor Insurance with class 1 business cover, MOT Test Certificate, and Road Fund Tax.",
+        "pass": true,
+        "reason": "The actual answer correctly states the 45p per mile rate and provides additional relevant policy details without contradicting the expected answer.",
+        "inputTokens": 1771,
+        "outputTokens": 102,
+        "latency_ms": 1931
+      },
+      "baseline": {
+        "answer": "According to the policy, the mileage rate for a private vehicle is **45p per mile**, with a passenger supplement of 5p per mile.\n\nThe policy notes that this rate is based on the HMRC rate and can be reviewed if that rate changes.",
+        "pass": true,
+        "reason": "The actual answer correctly states the mileage rate of 45p per mile, matching the expected answer, with additional relevant context about the passenger supplement and HMRC basis.",
+        "inputTokens": 5019,
+        "outputTokens": 59,
+        "latency_ms": 5608
+      }
+    },
+    {
+      "id": "yas-002",
+      "question": "My home-to-base one-way distance is 30 miles. I drove 80 miles total today doing work journeys. How many miles can I claim?",
+      "expected": "20 miles. Calculation: 80 minus (30 x 2) = 20.",
+      "cite": "Guidance section 7",
+      "compile": {
+        "answer": "Based on the excess mileage rule in the policy:\n\n**Your calculation:**\n- Home-to-base one-way distance: 30 miles\n- Home-to-base return distance: 30 × 2 = 60 miles\n- Total miles travelled today: 80 miles\n- **Claimable miles: 80 − 60 = 20 miles**\n\nYou can claim **20 miles**.\n\nThe policy states that home-to-base return mileage must be deducted from total miles travelled, and only the excess miles beyond the home-to-base return journey are claimable.",
+        "pass": true,
+        "reason": "Both answers correctly calculate 20 claimable miles using the same method (80 - 60 = 20) and the actual answer provides clear explanation of the policy.",
+        "inputTokens": 1791,
+        "outputTokens": 143,
+        "latency_ms": 1685
+      },
+      "baseline": {
+        "answer": "# Mileage Claim Calculation\n\nBased on the policy guidance in Section 7, here's how to calculate your claimable mileage:\n\n**Given:**\n- Home to base one-way distance: 30 miles\n- Total miles travelled for work purposes: 80 miles\n\n**Calculation:**\n- Home to base return: 30 × 2 = 60 miles\n- Total miles travelled minus home to base return: 80 – 60 = **20 miles**\n\n**You can claim 20 miles.**\n\nThe policy requires that \"the home to base mileage must be removed from the claim as if the journey was undertaken as travelling from the base and not from home.\"",
+        "pass": true,
+        "reason": "Both answers correctly calculate 20 miles claimable using the same methodology (80 - 60 = 20), with the actual answer providing additional policy context.",
+        "inputTokens": 5039,
+        "outputTokens": 160,
+        "latency_ms": 2059
+      }
+    },
+    {
+      "id": "yas-003",
+      "question": "I'm attending a 1-day training course. Can the Trust book me overnight accommodation?",
+      "expected": "Not normally — accommodation is not usually provided for 1-day events. An exception may apply if the course has an early start time and your travel from home would exceed 1 hour.",
+      "cite": "Policy section 3.6",
+      "compile": {
+        "answer": "According to the policy rules on accommodation eligibility for training:\n\n**No, not normally.**\n\nThe policy states that accommodation is **not normally provided for 1-day events**.\n\nHowever, there is **one exception**: Accommodation may be provided prior to a 1-day course if:\n- The course has an **early commencement time**, AND\n- The **travel time from your home address to the venue would exceed 1 hour** (as determined by AA route planner or HERE Maps)\n\nIn this specific circumstance, overnight accommodation prior to the course start date would be permitted.\n\nFor any other 1-day training course without these exceptional circumstances, you would need to arrange your own accommodation or discuss alternatives with your line manager.",
+        "pass": true,
+        "reason": "The actual answer matches the expected answer by confirming accommodation is not normally provided for 1-day events, while clearly explaining the same exception criteria regarding early start times and travel duration exceeding 1 hour.",
+        "inputTokens": 1774,
+        "outputTokens": 160,
+        "latency_ms": 2532
+      },
+      "baseline": {
+        "answer": "According to the policy, **no, the Trust will not normally provide overnight accommodation for 1-day events**.\n\nThis is stated in Section 3.6 of the Travel and Subsistence Policy:\n\n\"Accommodation will not normally be provided for 1-day events.\"\n\nHowever, there is a potential exception: accommodation may be provided prior to a 1-day course if the course has an early commencement time and travel time would be in excess of 1 hour.",
+        "pass": true,
+        "reason": "The actual answer correctly states that accommodation is not normally provided for 1-day events and accurately describes the exception for early start times with travel exceeding 1 hour.",
+        "inputTokens": 5022,
+        "outputTokens": 106,
+        "latency_ms": 1763
+      }
+    },
+    {
+      "id": "yas-004",
+      "question": "My home is 45 minutes from a training venue. Am I eligible for overnight accommodation?",
+      "expected": "No. Distance from home to venue must exceed 1 hour as determined by AA route planner or HERE Maps.",
+      "cite": "Policy section 3.6 / Guidance section 10",
+      "compile": {
+        "answer": "No, you are not eligible for overnight accommodation based on the rules provided.\n\nAccording to the policy, accommodation eligibility for training requires **both** of the following conditions to be met:\n\n1. Distance from home to training venue must be **in excess of 1 hour** (as determined by AA route planner or HERE Maps), AND\n2. The event must be **more than 1 day in duration**\n\nSince your home is 45 minutes from the venue, this is **less than 1 hour**, so you do not meet the first requirement. The policy states that \"accommodation is not normally provided for 1-day events,\" but more fundamentally, the distance threshold itself is not satisfied.",
+        "pass": true,
+        "reason": "Both answers correctly conclude 'No' with accurate explanation that 45 minutes is less than the required 1-hour threshold.",
+        "inputTokens": 1774,
+        "outputTokens": 153,
+        "latency_ms": 2316
+      },
+      "baseline": {
+        "answer": "No, you are not eligible for overnight accommodation.\n\nAccording to Section 3.6 of the Travel and Subsistence Policy, overnight accommodation is only provided when the distance from your home address to the training venue is **in excess of 1 hour** (as determined by AA route planner or HERE Maps).\n\nSince your home is 45 minutes from the training venue, this is less than the 1-hour threshold required for eligibility.",
+        "pass": true,
+        "reason": "The actual answer correctly states ineligibility and includes the critical fact about the 1-hour threshold requirement determined by AA route planner or HERE Maps.",
+        "inputTokens": 5022,
+        "outputTokens": 98,
+        "latency_ms": 1324
+      }
+    },
+    {
+      "id": "yas-005",
+      "question": "I forgot to submit an expense from 5 months ago. Can I still claim it?",
+      "expected": "No, unless you have been on long-term sick leave. Claims must be submitted within 3 months / 90 days of expenditure.",
+      "cite": "Policy section 4.5.7",
+      "compile": {
+        "answer": "Based on the policy rules provided:\n\n**No, you cannot claim an expense from 5 months ago.**\n\nThe policy has a **90-day (3-month) deadline** for submitting travel and subsistence claims.\n\nSince your expense is from 5 months ago, it is **beyond this deadline** and therefore ineligible.\n\n**Exception:** The only exception to this 90-day deadline is if you were on long-term sick leave during that period. If that applies to you, you should discuss this with your line manager or the relevant approver.",
+        "pass": true,
+        "reason": "The actual answer correctly states the 90-day deadline, confirms the expense cannot be claimed, and mentions the long-term sick leave exception, matching the expected answer.",
+        "inputTokens": 1774,
+        "outputTokens": 124,
+        "latency_ms": 2227
+      },
+      "baseline": {
+        "answer": "According to the policy, **no, you cannot claim an expense from 5 months ago**.\n\nSection 4.5.7 of the policy states:\n\n\"Claimants must ensure that all claims are submitted to the authorising manager as soon as possible after expenditure has been incurred. All claims should be made within 3 months or 90 days. The only exceptions are where staff are on long-term sick leave.\"\n\nSince your expense is from 5 months ago and you are not on long-term sick leave, it falls outside the 3-month (90-day) deadline and would not be eligible for reimbursement.",
+        "pass": true,
+        "reason": "The actual answer correctly states that expenses from 5 months ago cannot be claimed, cites the 3-month deadline, and mentions the long-term sick leave exception, matching the expected answer.",
+        "inputTokens": 5022,
+        "outputTokens": 144,
+        "latency_ms": 2196
+      }
+    },
+    {
+      "id": "yas-006",
+      "question": "I need to travel to a conference in Germany. Who has to approve it?",
+      "expected": "A Director must authorise overseas travel in advance.",
+      "cite": "Policy section 3.10",
+      "compile": {
+        "answer": "According to the policy rules on approval:\n\n**Overseas travel must be approved by a Director, and this approval must be obtained in advance.**\n\nThe relevant rule states: \"Overseas travel — approver: Director (must be authorised in advance)\"\n\nYou should contact your Director before arranging your travel to Germany to obtain this required advance authorization.",
+        "pass": true,
+        "reason": "The actual answer correctly states that a Director must approve overseas travel in advance, matching the expected answer with additional helpful context.",
+        "inputTokens": 1771,
+        "outputTokens": 75,
+        "latency_ms": 1754
+      },
+      "baseline": {
+        "answer": "According to the policy, any claims for overseas travel must be authorised in advance by a Director.\n\nSection 3.10 states: \"Any claims for overseas travel must be authorised in advance by a Director.\"",
+        "pass": true,
+        "reason": "Both answers convey the same requirement that a Director must authorize overseas travel in advance, with only minor phrasing differences.",
+        "inputTokens": 5019,
+        "outputTokens": 48,
+        "latency_ms": 1281
+      }
+    },
+    {
+      "id": "yas-007",
+      "question": "Can a colleague with signatory authority approve my expense claim if my line manager is on leave?",
+      "expected": "No. Claims must be authorised by a manager with authorised signatory approval, not by colleagues.",
+      "cite": "Policy section 3.10",
+      "compile": {
+        "answer": "No. According to the approval rules in this policy, claims must not be authorised by colleagues or by those without authorised signatory approval.\n\nYour expense claim must be approved by **your line manager with authorised signatory approval for expenses**. A colleague, even if they have signatory authority in general, cannot approve your claim simply because your line manager is on leave.\n\nYou would need to wait for your line manager to return, or clarify with your HR/Finance team whether there is a designated cover arrangement (such as an acting line manager with delegated signatory authority) in place for this situation.",
+        "pass": true,
+        "reason": "The actual answer correctly states that colleagues cannot approve claims and emphasizes the need for authorized signatory approval, matching the expected conclusion while providing helpful additional context about cover arrangements.",
+        "inputTokens": 1774,
+        "outputTokens": 129,
+        "latency_ms": 2037
+      },
+      "baseline": {
+        "answer": "According to the policy, no. Section 3.10 states:\n\n\"All travel claims for payment must be authorised by a manager who has authorised signatory approval for approving expenses; claims must not be authorised by colleagues or by those without authorised signatory.\"\n\nThe policy does not provide an exception for when your line manager is on leave. A colleague cannot approve your claim, even if they have signatory authority, if they are not your manager. Only a manager with appropriate authorised signatory approval can approve your expenses.",
+        "pass": true,
+        "reason": "Both answers correctly conclude that a colleague cannot approve the expense claim, with the actual answer providing supportive policy detail",
+        "inputTokens": 5022,
+        "outputTokens": 115,
+        "latency_ms": 2383
+      }
+    },
+    {
+      "id": "yas-008",
+      "question": "I drove a colleague to a meeting. Do I get anything extra on top of the mileage rate?",
+      "expected": "Yes, a passenger supplement of 5p per mile.",
+      "cite": "Guidance section 6 rates table",
+      "compile": {
+        "answer": "Yes. According to the mileage rates in the policy:\n\n**Private vehicle:** You receive an additional **5p per mile passenger supplement** on top of the standard 45p per mile rate.\n\n**Lease vehicle:** The policy specifies HMRC guidelines apply, but does **not specify whether a passenger supplement is available** for lease vehicles.\n\nSo if you used a private vehicle, you can claim the base mileage rate plus 5p per mile for carrying your colleague.",
+        "pass": true,
+        "reason": "The actual answer confirms the expected answer of a 5p per mile passenger supplement and provides additional helpful context about lease vehicles.",
+        "inputTokens": 1777,
+        "outputTokens": 106,
+        "latency_ms": 2070
+      },
+      "baseline": {
+        "answer": "According to the policy, yes. There is a **passenger supplement of 5p per mile** available when you drive a colleague.\n\nThis is shown in the mileage rates table in section 5 of the Employee Guidance, which states:\n\n| Vehicle type | Mileage rate | Passenger supplement |\n|---|---|---|\n| Private | 45p per mile* | 5p per mile |\n| Lease | As per HMRC guidelines | Not applicable |\n\nSo you would claim your mileage at 45p per mile plus an additional 5p per mile for each passenger you carried.",
+        "pass": true,
+        "reason": "The actual answer confirms the expected answer of a 5p per mile passenger supplement and provides supporting detail from policy documentation.",
+        "inputTokens": 5025,
+        "outputTokens": 136,
+        "latency_ms": 2510
+      }
+    },
+    {
+      "id": "yas-009",
+      "question": "The Trust offered me overnight accommodation for a course but I chose to drive in each day. Can I claim travel time?",
+      "expected": "No, unless there is good reason such as carer responsibilities.",
+      "cite": "Guidance section 11",
+      "compile": {
+        "answer": "According to the policy, **travel time will not be payable** in your situation.\n\nHere's why:\n\nThe policy states under **prohibitions** that:\n> \"Travel time will not be payable if employee is asked to work from an alternative base station for their full shift; employee must travel to alternative location in their own time\"\n\nAdditionally, under **exceptions**, there is a rule about travel time payability:\n> \"Accommodation has been offered and turned down, unless good reason can be shown (e.g., carer responsibilities)\"\n\n**However, there is a potential exception:** If you can demonstrate a **good reason** for turning down the offered accommodation (such as carer responsibilities), you may be able to claim travel time. You would need to provide this justification when submitting your claim.\n\nIf you believe you have legitimate grounds for refusing the accommodation, I'd recommend discussing this with your **line manager** before submitting your claim, as they may need to approve any exception to the standard rule.",
+        "pass": true,
+        "reason": "Both answers correctly state that travel time is not claimable unless there is good reason such as carer responsibilities, with identical conclusions and key conditions.",
+        "inputTokens": 1779,
+        "outputTokens": 216,
+        "latency_ms": 2813
+      },
+      "baseline": {
+        "answer": "According to the policy, travel time will **not** be payable where accommodation has been offered and turned down unless good reason can be shown (i.e., carer responsibilities, etc.).\n\nSince you chose not to use the offered accommodation, you would not normally be eligible to claim travel time, unless you can demonstrate good reason for rejecting the accommodation.",
+        "pass": true,
+        "reason": "Both answers reach the same conclusion that travel time is not claimable when accommodation is offered and rejected, unless good reason (like carer responsibilities) is demonstrated.",
+        "inputTokens": 5027,
+        "outputTokens": 76,
+        "latency_ms": 1395
+      }
+    },
+    {
+      "id": "yas-010",
+      "question": "I bought lunch while attending a meeting away from base but lost the receipt. Can I claim it back?",
+      "expected": "No. Meal claims will only be paid on production of appropriate receipts.",
+      "cite": "Policy section 3.10",
+      "compile": {
+        "answer": "Based on the policy rules, **no, you cannot claim this expense without a receipt**.\n\nThe evidence requirements state:\n\n> \"Meals and subsistence (not included in accommodation) — Appropriate receipts must be produced\"\n\nYou will need to produce the receipt to support your claim. Since you've lost it, you won't be able to claim reimbursement for that lunch under this policy.",
+        "pass": true,
+        "reason": "Both answers correctly conclude that the meal cannot be claimed without a receipt, with the actual answer providing additional supportive policy detail.",
+        "inputTokens": 1776,
+        "outputTokens": 87,
+        "latency_ms": 1714
+      },
+      "baseline": {
+        "answer": "According to the policy, no, you cannot claim it back without a receipt.\n\nSection 3.10 of the policy states: \"Any other expenses i.e. claim for meals, will only be paid on the production of appropriate receipts.\"\n\nSince you lost the receipt for your lunch, you do not have the appropriate receipt required to support your claim.",
+        "pass": true,
+        "reason": "The actual answer correctly concludes that the claim cannot be made without a receipt, matching the expected answer and providing supporting policy detail.",
+        "inputTokens": 5024,
+        "outputTokens": 78,
+        "latency_ms": 1636
+      }
+    }
+  ]
+}

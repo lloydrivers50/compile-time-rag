@@ -23,8 +23,14 @@ export async function askLLMForPolicyRules(
         role: "user",
         content:
           `Extract the structured policy rules from this NHS travel and ` +
-          `subsistence document. Use the report_policy_rules tool. Anything ` +
-          `that doesn't fit a specific field goes into 'unhandled'.\n\n` +
+          `subsistence document. Use the report_policy_rules tool.\n\n` +
+          `Pay particular attention to:\n` +
+          `- Exceptions ("X applies, EXCEPT when Y") — these are easy to ` +
+          `miss because they qualify other rules.\n` +
+          `- Prohibitions ("must not", "cannot", "is not permitted") — these ` +
+          `are often as important as the positive rules.\n` +
+          `- Evidence requirements (receipts, documentation, proofs).\n\n` +
+          `Anything that doesn't fit a specific field goes into 'unhandled'.\n\n` +
           `Document:\n\n${documentText}`,
       },
     ],

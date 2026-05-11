@@ -1,7 +1,7 @@
 {
   "policyTitle": "Travel and Subsistence Policy and Employee Guidance",
   "policyVersion": "V7.1",
-  "issuingTrust": "<UNKNOWN>",
+  "issuingTrust": "NHS Trust (issuer not explicitly named in document)",
   "mileageRates": [
     {
       "vehicleType": "private",
@@ -14,21 +14,21 @@
       "passengerSupplement": null
     }
   ],
-  "excessMileageRule": "Claimable mileage is total miles travelled minus home to base return journey (home to base mileage x 2). Employees are reimbursed for miles travelled in performance of duties which are in excess of the agreed home to work base return journey.",
+  "excessMileageRule": "Home to base return mileage must be deducted from total miles travelled. Calculated as: (Home to base return) × 2, then subtract from total miles travelled for work purposes. Only excess miles beyond the home-to-base return journey are claimable.",
   "accommodationEligibility": [
     {
       "context": "training",
-      "rule": ">1 hour from home AND event >1 day duration. Accommodation not normally provided for 1-day events. Exceptions may be made for early commencement times where travel time would be >1 hour."
+      "rule": "Distance from home address to training venue must be in excess of 1 hour (as determined by AA route planner or HERE Maps) AND event must be more than 1 day in duration. Accommodation not normally provided for 1-day events. Accommodation not normally provided prior to course start date, except where courses have early commencement time and travel time would exceed 1 hour."
     },
     {
       "context": "business travel (meetings/conferences)",
-      "rule": ">1 hour from home AND event >1 day duration. Same criteria as training."
+      "rule": "Distance from home address to venue must be more than 1 hour (as determined by AA route planner or HERE Maps) AND event must be more than 1 day in duration."
     }
   ],
   "approvalRules": [
     {
-      "expenseType": "general travel and subsistence",
-      "approver": "Line manager with authorised signatory approval for approving expenses"
+      "expenseType": "general travel and subsistence (not part of standard duties)",
+      "approver": "Line manager with authorised signatory approval for expenses"
     },
     {
       "expenseType": "overseas travel",
@@ -36,54 +36,92 @@
     },
     {
       "expenseType": "exceptions to agreed allowances",
-      "approver": "Associate Director"
+      "approver": "Associate Director (sign-off required)"
     }
   ],
   "bookingProcess": {
-    "bookingSystem": "Redfern travel booking system via office administration team",
+    "bookingSystem": "Redfern travel booking system via admin team",
     "leadTimeWeeks": 2,
     "claimDeadlineDays": 90
   },
+  "exceptions": [
+    {
+      "appliesTo": "claim deadline (90 days/3 months)",
+      "condition": "Employee is on long-term sick leave"
+    },
+    {
+      "appliesTo": "travel time payability",
+      "condition": "Accommodation has been offered and turned down, unless good reason can be shown (e.g., carer responsibilities)"
+    },
+    {
+      "appliesTo": "overnight accommodation prior to course",
+      "condition": "Course has early commencement time and travel time would be in excess of 1 hour"
+    },
+    {
+      "appliesTo": "accommodation eligibility",
+      "condition": "Urgent requirement exists for employee to book public transport or accommodation themselves rather than through Trust booking system"
+    }
+  ],
+  "prohibitions": [
+    {
+      "topic": "expense approval authority",
+      "rule": "Claims must not be authorised by colleagues or by those without authorised signatory approval"
+    },
+    {
+      "topic": "meal subsistence claims",
+      "rule": "Where meals are included in accommodation booking, employees will not be permitted to claim any other subsistence in relation to meals"
+    },
+    {
+      "topic": "fraudulent claims",
+      "rule": "Falsely claiming travel and other expenses to which employees are not entitled is fraudulent and will result in criminal and/or disciplinary action"
+    },
+    {
+      "topic": "business vehicle insurance",
+      "rule": "Employees must not undertake business journeys without appropriate business cover in vehicle insurance; failure to do so may invalidate the policy"
+    },
+    {
+      "topic": "travel time claims",
+      "rule": "Travel time will not be payable if employee is asked to work from an alternative base station for their full shift; employee must travel to alternative location in their own time"
+    }
+  ],
+  "evidenceRequirements": [
+    {
+      "expenseType": "meals and subsistence (not included in accommodation)",
+      "requirement": "Appropriate receipts must be produced"
+    },
+    {
+      "expenseType": "all travel and subsistence claims",
+      "requirement": "Employee declaration stating claim is accurate, legitimate and incurred in course of duties"
+    },
+    {
+      "expenseType": "driver/vehicle eligibility for mileage claims",
+      "requirement": "Line manager must annually verify: valid driving licence, Certificate of Motor Insurance policy document (with class 1 business cover), MOT Test Certificate, Road Fund Tax"
+    },
+    {
+      "expenseType": "mileage claims",
+      "requirement": "Employee must hold appropriate and valid driving licence for their class of vehicle; vehicle must be roadworthy with valid insurance and MOT certificates"
+    }
+  ],
   "unhandled": [
     {
-      "topic": "Travel system platforms",
-      "rawText": "Claims can be made using either GRS (for staff using GRS for rostering) or EASY expenses system via ESR. All claims must be approved in accordance with the Trust scheme of delegation."
+      "topic": "travel time reconciliation and payment conditions",
+      "rawText": "Section 11 describes complex reconciliation rules for travel time where employees are stood down from normal shifts to attend training. Hours that would have been worked on normal shifts are reconciled against excess travel time claims. Staff will only be able to claim travel time in excess of hours reconciled. Overtime may be claimed for hours worked in excess, except for relief staff where hours are reconciled through Scheduling Team."
     },
     {
-      "topic": "Payment schedule",
-      "rawText": "Expenses are paid a month in arrears provided the claim is submitted by the 5th of the following month. For example, expenses incurred in September would be paid into your October salary."
+      "topic": "day-for-a-day principle for training",
+      "rawText": "Section 3.7 states: 'If employees are required to attend training, then the principle of a day for a day will be applied. Arrangements for travel time are as detailed in the employee guidance that should be read in conjunction with this policy.' This principle is referenced but detailed implementation is in employee guidance."
     },
     {
-      "topic": "Route planner specification",
-      "rawText": "Journeys will be calculated on the quickest route as calculated by AA route planner or HERE Maps (if using EASY Expenses system). Prior to undertaking journeys, employees should consider whether journeys are necessary and whether duties can be performed virtually or by telephone."
+      "topic": "green agenda consideration",
+      "rawText": "Section 3.4: 'To support the environment and Green agenda, prior to undertaking journeys, employees should consider, whether their journeys are necessary i.e. can the duties be performed satisfactorily virtually or by telephone, rather than in person. Undertaking the duties via a virtual meeting should always be considered first.'"
     },
     {
-      "topic": "Meal subsistence with accommodation",
-      "rawText": "If meals are included in the accommodation booking, then employees will not be permitted to claim any other subsistence in relation to meals."
+      "topic": "route planning methodology change",
+      "rawText": "Section 6.1 change log notes: 'Change of basis of calculation from shortest to quickest' (February 2022). Policy now specifies 'quickest route' for journey planning."
     },
     {
-      "topic": "Travel time eligibility",
-      "rawText": "Under local agreement, where travel time to a training venue exceeds normal home to base travel time, excess travel time is payable at plain time. Travel time not payable where accommodation offered and declined unless good reason shown (e.g., carer responsibilities). Hours worked on normal shifts are reconciled against training hours. Travel time not payable if asked to work from alternative base station for full shift."
-    },
-    {
-      "topic": "Day for a day principle",
-      "rawText": "If employees are required to attend training, then the principle of a day for a day will be applied."
-    },
-    {
-      "topic": "Vehicle documentation checks",
-      "rawText": "Managers who approve mileage travel claims must annually check: valid driving licence, Certificate of Motor Insurance policy document (with class 1 business cover), MOT Test Certificate, Road Fund Tax. Document check should be undertaken before approving claim and repeated annually as part of appraisal process."
-    },
-    {
-      "topic": "Record retention",
-      "rawText": "The Trust will retain records of claims including copies of receipts for 3 years from the end of the tax year the claim relates to."
-    },
-    {
-      "topic": "Fraud and disciplinary action",
-      "rawText": "Zero-tolerance approach to fraud. Trust commits to investigate any claims suspected of being fraudulent or excessive in accordance with Local Counter Fraud, Bribery and Corruption Policy. Trust reserves right to withhold and withdraw payment of expenses if suspected or proven non-compliance with policies. Non-adherence to these arrangements will be in breach of Trust's Standing Financial Instructions and may be subject to disciplinary action."
-    },
-    {
-      "topic": "Virtual meeting preference",
-      "rawText": "Employees should prioritise alternatives to travel for non-clinical meetings wherever possible e.g. teleconferencing via MS Teams/Zoom. For non-clinical meetings where travel unavoidable, staff should use most cost-effective mode e.g. Trust pool car, lift-sharing."
+      "topic": "expense payment timing",
+      "rawText": "Employee Guidance Section 3 states: 'Expenses are paid a month in arrears provided the claim is submitted by the 5th of the following month. For example, expenses incurred in September would be paid into your October salary.'"
     }
   ]
 }

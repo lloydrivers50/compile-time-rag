@@ -1,0 +1,67 @@
+{
+  "source": "YAS Travel and Subsistence Policy v7.1 (March 2022, extension to Sep 2025)",
+  "generated": "2026-05-10",
+  "notes": "LLM-generated from policy-text.txt, spot-check a sample against the PDF before trusting blind.",
+  "questions": [
+    {
+      "id": "yas-001",
+      "question": "What's the mileage rate for using my own car on Trust business?",
+      "expected": "45p per mile.",
+      "cite": "Guidance section 5 / section 6 rates table"
+    },
+    {
+      "id": "yas-002",
+      "question": "My home-to-base one-way distance is 30 miles. I drove 80 miles total today doing work journeys. How many miles can I claim?",
+      "expected": "20 miles. Calculation: 80 minus (30 x 2) = 20.",
+      "cite": "Guidance section 7"
+    },
+    {
+      "id": "yas-003",
+      "question": "I'm attending a 1-day training course. Can the Trust book me overnight accommodation?",
+      "expected": "Not normally — accommodation is not usually provided for 1-day events. An exception may apply if the course has an early start time and your travel from home would exceed 1 hour.",
+      "cite": "Policy section 3.6"
+    },
+    {
+      "id": "yas-004",
+      "question": "My home is 45 minutes from a training venue. Am I eligible for overnight accommodation?",
+      "expected": "No. Distance from home to venue must exceed 1 hour as determined by AA route planner or HERE Maps.",
+      "cite": "Policy section 3.6 / Guidance section 10"
+    },
+    {
+      "id": "yas-005",
+      "question": "I forgot to submit an expense from 5 months ago. Can I still claim it?",
+      "expected": "No, unless you have been on long-term sick leave. Claims must be submitted within 3 months / 90 days of expenditure.",
+      "cite": "Policy section 4.5.7"
+    },
+    {
+      "id": "yas-006",
+      "question": "I need to travel to a conference in Germany. Who has to approve it?",
+      "expected": "A Director must authorise overseas travel in advance.",
+      "cite": "Policy section 3.10"
+    },
+    {
+      "id": "yas-007",
+      "question": "Can a colleague with signatory authority approve my expense claim if my line manager is on leave?",
+      "expected": "No. Claims must be authorised by a manager with authorised signatory approval, not by colleagues.",
+      "cite": "Policy section 3.10"
+    },
+    {
+      "id": "yas-008",
+      "question": "I drove a colleague to a meeting. Do I get anything extra on top of the mileage rate?",
+      "expected": "Yes, a passenger supplement of 5p per mile.",
+      "cite": "Guidance section 6 rates table"
+    },
+    {
+      "id": "yas-009",
+      "question": "The Trust offered me overnight accommodation for a course but I chose to drive in each day. Can I claim travel time?",
+      "expected": "No, unless there is good reason such as carer responsibilities.",
+      "cite": "Guidance section 11"
+    },
+    {
+      "id": "yas-010",
+      "question": "I bought lunch while attending a meeting away from base but lost the receipt. Can I claim it back?",
+      "expected": "No. Meal claims will only be paid on production of appropriate receipts.",
+      "cite": "Policy section 3.10"
+    }
+  ]
+}

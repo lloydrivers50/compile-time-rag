@@ -52,6 +52,59 @@ export const PolicyRules = z.object({
     claimDeadlineDays: z.number().nullable(),
   }),
 
+  exceptions: z
+    .array(
+      z.object({
+        appliesTo: z
+          .string()
+          .describe(
+            "The rule or constraint this exception modifies, e.g. 'claim deadline', 'accommodation eligibility'",
+          ),
+        condition: z
+          .string()
+          .describe(
+            "The condition under which the rule does NOT apply, e.g. 'employee is on long-term sick leave'",
+          ),
+      }),
+    )
+    .describe(
+      "Carve-outs and exceptions to rules elsewhere in this artifact. Anywhere the policy says 'X applies, except when Y' — Y goes here.",
+    ),
+
+  prohibitions: z
+    .array(
+      z.object({
+        topic: z
+          .string()
+          .describe("e.g. 'expense approval', 'fraudulent claims'"),
+        rule: z
+          .string()
+          .describe(
+            "What is explicitly forbidden, e.g. 'colleagues without authorised signatory must not approve claims'",
+          ),
+      }),
+    )
+    .describe(
+      "Explicit negative constraints — anywhere the policy says 'must not' or 'cannot'. Separate from approvalRules etc., because those describe what IS allowed.",
+    ),
+
+  evidenceRequirements: z
+    .array(
+      z.object({
+        expenseType: z
+          .string()
+          .describe("e.g. 'meals', 'mileage', 'public transport'"),
+        requirement: z
+          .string()
+          .describe(
+            "What evidence is required, e.g. 'appropriate receipts must be produced'",
+          ),
+      }),
+    )
+    .describe(
+      "Receipt, documentation, and proof requirements for each expense type. Anywhere the policy says 'X will only be paid on production of Y' — capture here.",
+    ),
+
   unhandled: z
     .array(
       z.object({
